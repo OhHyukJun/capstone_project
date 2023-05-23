@@ -1,0 +1,35 @@
+{
+    "name": "n",
+    "version": "1.0.0",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js",
+        "backend": "nodemon ./node.js_project/index.js",
+        "dev": "concurrently \"npm run backend\" \"npm run start --prefix react.js_project \" ",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "bcrypt": "^5.1.0",
+        "body-parser": "^1.20.2",
+        "concurrently": "^8.0.1",
+        "cookie-parser": "^1.4.6",
+        "express": "^4.18.2",
+        "jsonwebtoken": "^9.0.0",
+        "mongodb": "^5.1.0",
+        "mongoose": "^7.0.3"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.22"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/OhHyukJun/capstone_project.git"
+    },
+    "bugs": {
+        "url": "https://github.com/OhHyukJun/capstone_project/issues"
+    },
+    "homepage": "https://github.com/OhHyukJun/capstone_project#readme",
+    "description": ""
+}

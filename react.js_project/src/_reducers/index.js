@@ -1,0 +1,10 @@
+//rootReducer에 user_reducer를 추가해줍니다.
+
+import { combineReducers } from "redux";
+import user from "./user_reducer";
+
+const rootReducer = combineReducers({
+  user,
+});
+
+export default rootReducer;

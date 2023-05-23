@@ -1,21 +1,27 @@
 const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
 
 const userSchema = mongoose.Schema({
     
-    name: {
-        type: String,
-        maxLength: 50,
+    Id: {
+        
+        type: String,  
     },
 
-    privacyId : {
+    name: {
+        type: String,
+        unique: 1,
+    },
+
+    department : {
         type: Number,
         default: 0,
     },
 
     password: {
         type: String,
-        minLength: 10,
-        maxLength: 16,
+        //minLength: 10,
+        //maxLength: 16,
     },
     
     role: {
@@ -24,7 +30,6 @@ const userSchema = mongoose.Schema({
     
     image: {
         type: String,
-        unique: 1, 
     }, 
     
     token: {type: String,},
@@ -36,10 +41,11 @@ const userSchema = mongoose.Schema({
 const bcrypt = require('bcrypt');
 //bcrypt 모듈을 가져옴
 const saltRounds = 10;
-//saltRound는 공식 사이트와 같이 10으로 하겠습니다.
+
 
 userSchema.pre('save', function (next) {
-    const user = this;
+    let user = this;
+        //  비밀번호를 변경하는 경우에
     if (user.isModified('password')) {
         // pawword를 변경할 때만 password가 암호화 되도록 하기 위해 사용하는 조건문
         bcrypt.genSalt(saltRounds, function (err, salt) {
@@ -58,6 +64,42 @@ userSchema.pre('save', function (next) {
     }
 }); 
 
+userSchema.methods.generateToken = async function () {
+  const user = this;
+  const token = jwt.sign(user._id.toHexString(), "secretToken");
+
+  user.token = token;
+  
+  try {
+    await user.save();
+    return token;
+  } catch (err) {
+    throw err;
+  }
+};
+
+userSchema.methods.comparePassword = async function(plainPassword) {
+  try {
+    const isMatch = await bcrypt.compare(plainPassword, this.password);
+    return isMatch;
+  } catch (err) {
+    throw err;
+  }
+};
+
+
+userSchema.statics.findByToken = function (token) {
+  const user = this;
+  let decoded;
+
+   try {
+    decoded = jwt.verify(token, 'secretToken');
+  } catch (err) {
+    return Promise.reject(err);
+  }
+
+  return User.findOne({ _id: decoded._id, token: token });
+};
 
 const User = mongoose.model('User', userSchema)
 
