@@ -17,7 +17,11 @@ const userSchema = mongoose.Schema({
         type: Number,
         default: 0,
     },
-
+    
+    facepassword:{
+      type:String,
+    },
+    
     password: {
         type: String,
         //minLength: 10,
@@ -88,19 +92,26 @@ userSchema.methods.comparePassword = async function(plainPassword) {
 };
 
 
-userSchema.statics.findByToken = function (token) {
-  const user = this;
-  let decoded;
+userSchema.statics.findByToken = async function (token, cb) {
+  try {
+    let user = this;
 
-   try {
-    decoded = jwt.verify(token, 'secretToken');
+    // Decode the token.
+    const decoded = jwt.verify(token, "secretToken");
+
+    // Find the user using the user ID and token
+    const foundUser = await user.findOne({ _id: decoded, token: token });
+
+    return cb(null, foundUser);
   } catch (err) {
-    return Promise.reject(err);
+    return cb(err);
   }
-
-  return User.findOne({ _id: decoded._id, token: token });
 };
-
+/*
+  verify를 이용해 토큰을 decode합니다. 유저 아이디를 이용해서 유저를 찾은 후
+  클라이언트에서 가여온 token과 DB에 보관된 token이 일치하는지 확인합니다.
+  에러가 뜬다면 callback으로 에러 내용을 넘겨주고 아니면 true를 반환
+*/
 const User = mongoose.model('User', userSchema)
 
 module.exports = { User }
