@@ -8,7 +8,7 @@ def send_data(name, password):
         "password": password
     }
 
-    url = 'http://192.168.166.205:4000/api/users/login'  # 내 Express 서버의 IP 주소로 변경해야 합니다.
+    url = 'http://[통신하는 서버의 ip]:4000/api/users/login'  # 내 Express 서버의 IP 주소로 변경해야 합니다.
 
     try:
         response = requests.post(url, json=data)
@@ -23,7 +23,7 @@ def send_data(name, password):
 
 # TCP 서버 설정
 host = '0.0.0.0'  # 모든 IP 주소에서 연결 허용
-port = 4000  # 사용할 포트 번호
+port = 5000  # 사용할 포트 번호
 
 def handle_client(client_socket):
     # 클라이언트로부터 데이터 수신
