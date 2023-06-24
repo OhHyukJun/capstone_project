@@ -4,7 +4,6 @@ const jwt = require('jsonwebtoken');
 const userSchema = mongoose.Schema({
     
     Id: {
-        
         type: String,  
     },
 
@@ -18,27 +17,19 @@ const userSchema = mongoose.Schema({
         default: 0,
     },
     
-    facepassword:{
-      type:String,
-    },
-    
     password: {
         type: String,
         //minLength: 10,
         //maxLength: 16,
     },
     
-    role: {
-        type: String,
-    },
-    
-    image: {
-        type: String,
-    }, 
-    
     token: {type: String,},
 
     tokenExp: {type: Number,
+    },
+
+    receivedData: {
+      type: String,  // Change the data type to match your actual data structure
     },
 })
 
