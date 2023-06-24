@@ -19,7 +19,6 @@ function App() {
       <React.Fragment>
         <Routes>
           <Route exact path="/" element={<LandingPage/>}/>
-          <Route exact path="/login" element={<LoginPage/>}/> {/* 로그인 페이지로 이동 */ }
           <Route exact path="/register" element={<RegisterPage/>}/> {/* 등록 페이지로 이동 */}
         </Routes>
       </React.Fragment>
