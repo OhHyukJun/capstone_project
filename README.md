@@ -27,5 +27,5 @@ react.js와 node.js를 사용하여 express 서버에서 WiFi 통신을 통해 �
   - 프록시 주소를 설정하여 react와 node를 npm run dev로 동시 실행   
 
 ## 통신 파이 코드
-- soket, request등을 사용하여 서버와 통신하여 로그인, 회원등록 등을 처리
+- socket, request등을 사용하여 서버와 통신하여 로그인, 회원등록 등을 처리
 - 얼굴인식 파일을 실행하여 유저 얼굴을 학습하여 등록처라
